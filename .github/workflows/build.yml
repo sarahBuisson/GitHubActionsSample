@@ -5,22 +5,16 @@ jobs:                      # les jobs
   myJob1:                        # Le nom du job
     runs-on: ubuntu-latest          # l’environnement sur lequel tourne un job   
     steps:                          # les steps à executer  
-      - uses: actions/checkout@v2   # checkout le projet courrant dans le runner de job1
-        
-      - name:     # nom facultatif pour cette action  
+      - name: checkout
+        uses: actions/checkout@v2   # checkout le projet courrant dans le runner de job1 
+      - name: Install Node          # nom facultatif pour cette action  
         uses: actions/setup-node@v2 # install nodeJs version 12
         with:
           node-version: 12.x
-          
-      - name: Build      # le nom est obligatoir pour les actions de ligne de commande
+      - name: Build       # le nom est obligatoir pour les actions de ligne de commande
         run: npm install  # execute la ligne de commande 
-
-
-
-
-
-  myJob2:                   # un autre job
-    runs-on: ubuntu-latest
+        
+  myJob2:                    # un autre job
     needs: myJob1           # attend la fin du job1 pour s'executer
     steps:
         - if:error==0       # lance cette step si aucune erreur n'a été détectée auparavant
